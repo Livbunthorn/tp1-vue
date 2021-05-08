@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Document</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://unpkg.com/vue@next"></script>
+    </head>
+    <body>
+        <div id="counter">
+            {{message}}
+
+            <button v-on:click ="sayHello()">Say HELLO</button>
+        </div>
+        <script>
+            let vueInstance = Vue.createApp({
+                data(){
+                    return {
+                        message: "HELLO WORLD!"
+                    }
+                }, 
+                methods: {
+                    sayHello: function(){
+                        alert("Hello!")
+                    }
+                },
+                created(){
+
+                },
+                mounted(){
+                    alert("I'm ready!!")
+                },
+            
+            });
+            vueInstance.mount('#counter')
+        </script>
+    </body>
+</html>

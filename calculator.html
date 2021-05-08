@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Awesome Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="calculator.css">
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <td colspan="5">
+                    <div id="screen">
+                        <span id="screen_top">M={{ memory }}</span>
+                        <div id="screen_bottom">
+                            <span id="operand1"> {{ screen }}</span>
+                            <span id="operator"></span>
+                            <span id="operand2"></span>
+                        </div>
+                        <!-- <span id="screen_bottom">0</span> -->
+                    </div>
+                </td>
+            </tr>
+            <tr><span v-if="screen>999999999" style="color: red;">No more digit</span></tr>
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-warning" v-on:click="btnMC">MC</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-warning" v-on:click="btnMR">MR</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-warning" v-on:click="btnMsub">M-</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-warning" v-on:click="btnMadd">M+</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-light"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-light" v-on:click="numButton('7')">7</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-light" v-on:click="numButton('8')">8</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-light" v-on:click="numButton('9')">9</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-secondary">÷</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-light">+/-</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-light" v-on:click="numButton('4')">4</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-light" v-on:click="numButton('5')">5</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-light" v-on:click="numButton('6')">6</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-secondary">x</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-secondary">-</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-light" v-on:click="numButton('1')">1</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-light" v-on:click="numButton('2')">2</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-light" v-on:click="numButton('3')">3</button>
+                </td>
+                <td rowspan="2">
+                    <button type="button" class="btn btn-secondary long-btn">+</button>
+                </td>
+                <td rowspan="2">
+                    <button type="button" class="btn btn-primary long-btn">=</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-danger" v-on:click="btnC">C</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-light" v-on:click="numButton('0')">0</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-light">.</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="alert alert-danger" id="message_panel" role="alert">
+        something wrong here
+    </div>
+
+    <script>
+        //create vue instance
+        let vue = Vue.createApp({
+            data() {
+                return {
+                    screen: 0,
+                    memory: 0,
+                    storeMemory: 0,
+                    str: "",
+                }
+            },
+            methods: {
+                numButton: function(num) {
+                    //alert(num);
+                    this.str += num;
+                    this.screen = parseInt(this.str);
+                },
+                btnMR: function() {
+                    this.memory = this.storeMemory;
+                },
+                btnMadd: function() {
+                    this.storeMemory += this.screen;
+                    this.memory = this.storeMemory;
+                },
+                btnMsub: function() {
+                    this.storeMemory -= this.screen;
+                    this.memory = this.storeMemory;
+                },
+                btnMC: function() {
+                    this.storeMemory = 0;
+                    this.memory = 0;
+                },
+                btnC: function() {
+                    this.screen = 0;
+                    this.str = "";
+                }
+            },
+        });
+        vue.mount('.container')
+    </script>
+</body>
+
+</html>
